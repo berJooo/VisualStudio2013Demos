@@ -17,27 +17,38 @@ namespace FactoryPattern {
         public abstract void Box();
     }
 
-    class CheesePizza : Pizza {    }
+    class CheesePizza : Pizza { }//起司披萨
 
-    class GreekPizza : Pizza {    }
+    class GreekPizza : Pizza {    } //希腊披萨
 
-    class PepperoniPizza : Pizza {    }
+    class PepperoniPizza : Pizza {    } //腊肠披萨
 
-    class SimplePizzaFactory : Pizza {    }
+    class SimplePizzaFactory  {
+
+        public Pizza CreatePizza(string type) {
+            Pizza pizza = null;
+
+            if(type.Equals("cheese")) {
+                pizza = new CheesePizza();
+            } else if(type.Equals("greek")) {
+
+            } else if(type.Equals("pepperoni")) {
+
+            }
+
+
+            return pizza;
+        }
+    }
 
     class PizzaStore {
 
         public Pizza pizza;
 
         //Pizza订单
-        public Pizza OrderPizza(string type) {
-            if(type.Equals("cheese")) {
-                pizza = new CheesePizza();
-            } else if(type.Equals("greek")) {
-                pizza = new GreekPizza();
-            } else if(type.Equals("pepperoni")) {
-                pizza = new PepperoniPizza();
-            }
+        public Pizza OrderPizza() {
+            
+            pizza = 
 
             pizza.Prepare();
             pizza.Bake();
