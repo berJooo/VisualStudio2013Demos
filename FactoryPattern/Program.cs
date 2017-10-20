@@ -43,12 +43,18 @@ namespace FactoryPattern {
 
     class PizzaStore {
 
-        public Pizza pizza;
+        public SimplePizzaFactory factory;
+       
+
+        public PizzaStore(SimplePizzaFactory factory) {
+            this.factory = factory;
+        }
 
         //Pizza订单
-        public Pizza OrderPizza() {
-            
-            pizza = 
+        public Pizza OrderPizza(string type) {
+            Pizza pizza;
+
+            pizza = factory.CreatePizza(type); //用于创建披萨。在这请注意，我们把new 操作符替换成工厂对象的创建方法，这里不再使用具体实例化
 
             pizza.Prepare();
             pizza.Bake();
