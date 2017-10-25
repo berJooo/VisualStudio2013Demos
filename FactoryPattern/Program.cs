@@ -17,11 +17,59 @@ namespace FactoryPattern {
         public abstract void Box();
     }
 
-    class CheesePizza : Pizza { }//起司披萨
+    class CheesePizza : Pizza {
+        public override void Prepare() {
+            Console.WriteLine("准备");
+        }
 
-    class GreekPizza : Pizza {    } //希腊披萨
+        public override void Bake() {
+            Console.WriteLine("烘焙");
+        }
 
-    class PepperoniPizza : Pizza {    } //腊肠披萨
+        public override void Cut() {
+            Console.WriteLine("切块");
+        }
+
+        public override void Box() {
+            Console.WriteLine("装盒");
+        }
+    }//起司披萨
+
+    class GreekPizza : Pizza {
+        public override void Prepare() {
+            throw new NotImplementedException();
+        }
+
+        public override void Bake() {
+            throw new NotImplementedException();
+        }
+
+        public override void Cut() {
+            throw new NotImplementedException();
+        }
+
+        public override void Box() {
+            throw new NotImplementedException();
+        }
+    } //希腊披萨
+
+    class PepperoniPizza : Pizza {
+        public override void Prepare() {
+            throw new NotImplementedException();
+        }
+
+        public override void Bake() {
+            throw new NotImplementedException();
+        }
+
+        public override void Cut() {
+            throw new NotImplementedException();
+        }
+
+        public override void Box() {
+            throw new NotImplementedException();
+        }
+    } //腊肠披萨
 
     class SimplePizzaFactory  {
 
@@ -31,9 +79,9 @@ namespace FactoryPattern {
             if(type.Equals("cheese")) {
                 pizza = new CheesePizza();
             } else if(type.Equals("greek")) {
-
+                pizza = new GreekPizza();
             } else if(type.Equals("pepperoni")) {
-
+                pizza = new PepperoniPizza();
             }
 
 
@@ -65,8 +113,20 @@ namespace FactoryPattern {
         }
     }
 
+
+    class DongbeiPizzaFactory : SimplePizzaFactory {
+
+    }
+
+    class BeijingPizzaFactory : SimplePizzaFactory {
+
+    }
+
     class Program {
         static void Main(string[] args) {
+            PizzaStore ps = new PizzaStore(new DongbeiPizzaFactory());
+            ps.OrderPizza("cheese");
+
         }
     }
 }
