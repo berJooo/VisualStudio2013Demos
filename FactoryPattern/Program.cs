@@ -89,7 +89,17 @@ namespace FactoryPattern {
         }
     }
 
-    class PizzaStore {
+    class DongbeiPizzaFactory : SimplePizzaFactory {
+
+    }
+
+    class BeijingPizzaFactory : SimplePizzaFactory {
+
+    }
+
+    class SouthPizzaFactory : SimplePizzaFactory { }
+
+    abstract class PizzaStore {
 
         public SimplePizzaFactory factory;
        
@@ -102,7 +112,7 @@ namespace FactoryPattern {
         public Pizza OrderPizza(string type) {
             Pizza pizza;
 
-            pizza = factory.CreatePizza(type); //用于创建披萨。在这请注意，我们把new 操作符替换成工厂对象的创建方法，这里不再使用具体实例化
+            pizza = CreatePizza(type); //用于创建披萨。在这请注意，我们把new 操作符替换成工厂对象的创建方法，这里不再使用具体实例化
 
             pizza.Prepare();
             pizza.Bake();
@@ -111,22 +121,41 @@ namespace FactoryPattern {
 
             return pizza;
         }
+
+        public abstract Pizza CreatePizza(string type);
     }
 
+    class DongbeiPizzaStore : PizzaStore{
 
-    class DongbeiPizzaFactory : SimplePizzaFactory {
+        public override Pizza CreatePizza(string type) {
+            if(type == "cheese") {
+                //东北风味cheese披萨
+            } else if(type == "pepperoni") {
+                //东北风味腊肠披萨
+            }
 
+            return null;
+        }
     }
 
-    class BeijingPizzaFactory : SimplePizzaFactory {
+    class BeijingPizzaStore : PizzaStore {
 
+        public override Pizza CreatePizza(string type) {
+            throw new NotImplementedException();
+        }
+    }
+
+    class SouthPizzaStore : PizzaStore {
+
+        public override Pizza CreatePizza(string type) {
+            throw new NotImplementedException();
+        }
     }
 
     class Program {
         static void Main(string[] args) {
-            PizzaStore ps = new PizzaStore(new DongbeiPizzaFactory());
-            ps.OrderPizza("cheese");
-
+            DongbeiPizzaStore dbps = new DongbeiPizzaStore();
+            dbps.OrderPizza("cheese");
         }
     }
 }
