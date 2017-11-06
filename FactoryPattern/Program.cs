@@ -102,6 +102,8 @@ namespace FactoryPattern {
     abstract class PizzaStore {
 
         public SimplePizzaFactory factory;
+
+		public PizzaStore() { }
        
 
         public PizzaStore(SimplePizzaFactory factory) {
