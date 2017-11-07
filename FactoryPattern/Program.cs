@@ -99,6 +99,7 @@ namespace FactoryPattern {
 
     class SouthPizzaFactory : SimplePizzaFactory { }
 
+
     abstract class PizzaStore {
 
         public SimplePizzaFactory factory;
