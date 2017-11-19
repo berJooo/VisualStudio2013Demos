@@ -51,7 +51,7 @@ namespace FactoryPattern {
 		public DBStyleCheesePizza() { //东北披萨有自己的打算番茄酱（Marinara）和薄饼
 			name = "DB Style Sauce and Cheese Pizza";
 			dough = "Thin Crust Dough";
-			sauce = "Marinara Sauce";
+			sauce = "Marinara Sauce";//番茄酱
 
 			toppings.Add("Grated Reggiano Cheese");//上面有高级干酪
 		}
@@ -160,20 +160,24 @@ namespace FactoryPattern {
 
     abstract class PizzaStore {
 
-        //public SimplePizzaFactory factory;
+		//public SimplePizzaFactory factory;
 
 		//public PizzaStore() { }
-       
+
 		/*
         public PizzaStore(SimplePizzaFactory factory) {
             this.factory = factory;
         }*/
 
-        //Pizza订单
-        public virtual Pizza OrderPizza(string type) {
-            Pizza pizza;
+		//Pizza订单
 
-            pizza = CreatePizza(type); //用于创建披萨。在这请注意，我们把new 操作符替换成工厂对象的创建方法，这里不再使用具体实例化
+		
+
+		public Pizza OrderPizza(string type) {
+
+			Pizza pizza;
+
+			pizza = CreatePizza(type); //用于创建披萨。在这请注意，我们把new 操作符替换成工厂对象的创建方法，这里不再使用具体实例化
 
             pizza.Prepare();
             pizza.Bake();
@@ -190,12 +194,12 @@ namespace FactoryPattern {
 
         public override Pizza CreatePizza(string type) {
             if(type == "cheese") {
-                
+				return new DBStyleCheesePizza();
             } else if(type == "pepperoni") {
                 //东北风味腊肠披萨
             }
 
-            return null;
+			return null;
         }
     }
 
@@ -216,13 +220,13 @@ namespace FactoryPattern {
     class Program {
         static void Main(string[] args) {
 			PizzaStore dbstore = new DBPizzaStore();
-			PizzaStore bjstore = new BJPizzaStore();
+			//PizzaStore bjstore = new BJPizzaStore();
 
 			Pizza pizza = dbstore.OrderPizza("cheese");
 			Console.WriteLine(pizza.GetName());
 
-			pizza = bjstore.OrderPizza("cheese");
-			Console.WriteLine(pizza.GetName());
+			//pizza = bjstore.OrderPizza("cheese");
+			//Console.WriteLine(pizza.GetName());
         }
     }
 }
