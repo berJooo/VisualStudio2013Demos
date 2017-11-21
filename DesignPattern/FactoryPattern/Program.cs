@@ -13,33 +13,39 @@ namespace FactoryPattern {
 
     abstract class Pizza {
 
-		public string name; //名称
-		public string dough; //面团类型
-		public string sauce; //酱料
+		protected string name; //名称
+		protected string dough; //面团类型
+		protected string sauce; //酱料
 
-		public ArrayList toppings = new ArrayList();
+		protected ArrayList toppings = new ArrayList();
 
-        public virtual void Prepare() {
-			Console.WriteLine("preparing " + name);
-			Console.WriteLine("tossing dough...");
-			Console.WriteLine("adding sauce...");
-			Console.WriteLine("adding toppings:");
+		public Pizza() { }
 
-			for(int i = 0; i < toppings.Count; i++) {
-				Console.WriteLine("   " + toppings[i]);
+		public virtual string Prepare() {
+			StringBuilder sb = new StringBuilder();
+
+			sb.Append("Preparing " + name + "\n");
+			sb.Append("Tossing " + dough + "\n");
+			sb.Append("Adding " + sauce + "\n");
+			sb.Append("Adding toppings:" + "\n");
+
+			foreach(string topping in toppings) {
+				sb.Append("\t" + topping + "\n");
 			}
+
+			return sb.ToString();
 		}
 
-		public virtual void Bake() {
-			Console.WriteLine("bake for 25 mins at 350");
+		public virtual string Bake() {
+			return "bake for 25 mins at 350 \n";
 		}
 
-		public virtual void Cut() {
-			Console.WriteLine("cutting the pizza into diagonal slices");
+		public virtual string Cut() {
+			return "cutting the pizza into diagonal slices \n";
 		}
 
-		public virtual void Box() {
-			Console.WriteLine("place pizza in official PizzaStore box");
+		public virtual string Box() {
+			return "place pizza in official PizzaStore box \n";
 		}
 
 		public virtual string GetName() {
@@ -66,8 +72,9 @@ namespace FactoryPattern {
 			toppings.Add("Shredded Mozzarella Cheese"); //北京的深盘披萨使用白干酪
 		}
 
-		public override void Cut() { //此方法覆盖了父类的，将披萨切正方形。
-			Console.WriteLine("Cutting the pizza into square slices");
+		public override string Cut() { //此方法覆盖了父类的，将披萨切正方形。
+			//base.Cut(); 看情况是否要使用父类的功能。
+			return "Cutting the pizza into square slices";
 		}
 	}
 	/*
@@ -162,7 +169,7 @@ namespace FactoryPattern {
 
 		//public SimplePizzaFactory factory;
 
-		//public PizzaStore() { }
+		public PizzaStore() { }
 
 		/*
         public PizzaStore(SimplePizzaFactory factory) {
@@ -170,9 +177,6 @@ namespace FactoryPattern {
         }*/
 
 		//Pizza订单
-
-		
-
 		public Pizza OrderPizza(string type) {
 
 			Pizza pizza;
@@ -187,12 +191,14 @@ namespace FactoryPattern {
             return pizza;
         }
 
-        public abstract Pizza CreatePizza(string type);
+		protected abstract Pizza CreatePizza(string type);
     }
 
     class DBPizzaStore : PizzaStore{
 
-        public override Pizza CreatePizza(string type) {
+		public DBPizzaStore() { }
+
+		protected override Pizza CreatePizza(string type) {
             if(type == "cheese") {
 				return new DBStyleCheesePizza();
             } else if(type == "pepperoni") {
@@ -205,14 +211,14 @@ namespace FactoryPattern {
 
     class BJPizzaStore : PizzaStore {
 
-        public override Pizza CreatePizza(string type) {
+		protected override Pizza CreatePizza(string type) {
             throw new NotImplementedException();
         }
     }
 
     class SouthPizzaStore : PizzaStore {
 
-        public override Pizza CreatePizza(string type) {
+		protected override Pizza CreatePizza(string type) {
             throw new NotImplementedException();
         }
     }
@@ -224,9 +230,13 @@ namespace FactoryPattern {
 
 			Pizza pizza = dbstore.OrderPizza("cheese");
 			Console.WriteLine(pizza.GetName());
+			Console.WriteLine(pizza.Prepare());
+			Console.WriteLine(pizza.Cut());
+			Console.WriteLine(pizza.Box());
+			Console.WriteLine(pizza.Bake());
 
 			//pizza = bjstore.OrderPizza("cheese");
 			//Console.WriteLine(pizza.GetName());
-        }
+		}
     }
 }
